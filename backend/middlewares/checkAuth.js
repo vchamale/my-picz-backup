@@ -1,31 +1,35 @@
-import jwt from "jsonwebtoken";
-import pool from "../configs/db.js";
+import jwt from 'jsonwebtoken'
+import pool from '../configs/db.js'
 
 const checkAuth = async (req, res, next) => {
-  let token;
+  let token
+
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
     try {
-      token = req.headers.authorization.split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      token = req.headers.authorization.split(' ')[1]
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
       req.user = await pool.query(
         `SELECT id_end_user, name, lastname, email FROM end_user WHERE id_end_user = $1`,
         [decoded.id]
-      );
-      return next();
+      )
+
+      return next()
     } catch (error) {
-      return res.json({ msg: "Hubo un error. " });
+      return res.json({ msg: 'Hubo un error. ' })
     }
   }
 
   if (!token) {
-    const error = new Error("Token nooooo válido");
-    return res.json({ msg: error.message });
+    console.log('hasta aqui llegamos sin token')
+    const error = new Error('Token nooooo válido')
+    return res.json({ msg: error.message })
   }
-  next();
-};
+  next()
+}
 
-export default checkAuth;
+export default checkAuth

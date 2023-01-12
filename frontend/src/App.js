@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthProvider'
+import AuthLayout from './layouts/AuthLayout'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import ForgotPassword from './pages/ForgotPassword'
+import NewPassword from './pages/NewPassword'
+import ConfirmAccount from './pages/ConfirmAccount'
+import MainPage from './pages/MainPage'
+import CreateAlbum from './pages/CreateAlbum'
+import ProtectedRoutes from './layouts/ProtectedRoutes'
+import UploadPicture from './pages/UploadPicture'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path='/' element={<AuthLayout />}>
+            <Route index element={<Login />} />
+            <Route path='register' element={<Register />} />
+            <Route path='forgot_password' element={<ForgotPassword />} />
+            <Route path='forgot_password/:token' element={<NewPassword />} />
+            <Route path='confirm_account/:id' element={<ConfirmAccount />} />
+          </Route>
+          {/* Private Routes
+           */}
+          <Route path='/dashboard' element={<ProtectedRoutes />}>
+            <Route index element={<MainPage />} />
+            <Route path='create_album' element={<CreateAlbum />} />
+            <Route path='images' element={<UploadPicture />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App

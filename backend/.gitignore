@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules
+.env
+my-picz-ac2504d0647f.json
