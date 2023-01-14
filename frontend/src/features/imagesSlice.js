@@ -2,13 +2,33 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   photo_album: [],
-  albums: []
+  albums: [],
+  photos: [],
+  singlePhoto: {}
 }
 
 export const imagesSlice = createSlice({
   name: 'Images Slice',
   initialState,
-  reducers: {}
+  reducers: {
+    setAllPhotoAlbums(state, action) {
+      state.photo_album = action.payload
+    },
+    setAllAlbums(state, action) {
+      state.albums = action.payload
+    },
+    setAllPhotos(state, action) {
+      state.photos = action.payload
+    },
+    setSinglePhoto(state, action) {
+      state.singlePhoto = action.payload
+    },
+    clearAll(state, action) {
+      state.photo_album = []
+      state.albums = []
+      state.photos = []
+    }
+  }
 })
 
 export const imagesActions = imagesSlice.actions
