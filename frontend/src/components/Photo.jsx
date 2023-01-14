@@ -1,21 +1,12 @@
-import { useDispatch } from 'react-redux'
-import { imagesActions } from '../features/imagesSlice'
-
-const Photo = ({ image, handleOpen }) => {
-  const dispatch = useDispatch()
-
-  const handleOnClick = () => {
-    handleOpen()
-    dispatch(imagesActions.setSinglePhoto(image))
-  }
-
+const Photo = () => {
   return (
-    <div
-      className='w-full rounded-lg my-auto bg-white photos shadow-lg hover:cursor-pointer'
-      id={image.id_photo}
-      onClick={handleOnClick}
-    >
-      <img src={image.url} alt='loading' />
+    <div className='my-3 p-3'>
+      <img
+        src='https://storage.googleapis.com/my-picz/3%2F8e873129-69d2-4c53-846f-aa51130970ce.png'
+        alt=''
+        width={'250px'}
+        height={'250px'}
+      />
     </div>
   )
 }
