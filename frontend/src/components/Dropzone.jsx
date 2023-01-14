@@ -3,14 +3,14 @@ import { useDropzone } from 'react-dropzone'
 import axiosClient from '../config/axiosClient'
 import Button from '../components/Button'
 import { Link } from 'react-router-dom'
-
 import SelectAlbum from './SelectAlbum'
+import { useEffect } from 'react'
 
-const Dropzone = ({ selectedImages, setSelectedImages }) => {
-  const [loading, setLoading] = useState(false)
+const Dropzone = ({ loading, setLoading }) => {
   const [album, setAlbum] = useState('DEFAULT')
-  const [albumName, setAlbumName] = useState('')
+  const [newAlbumName, setNewAlbumName] = useState('')
   const [description, setDescription] = useState('')
+  const [selectedImages, setSelectedImages] = useState([])
 
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
@@ -24,9 +24,14 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
-  const selected_images = selectedImages?.map((file, i) => (
-    <div>
-      <img src={file.preview} style={{ width: '200' }} alt='' key={i} />
+  const selected_images = selectedImages?.map((file) => (
+    <div key={file.preview}>
+      <img
+        src={file.preview}
+        style={{ width: '200' }}
+        alt='loading'
+        key={file.preview}
+      />
     </div>
   ))
 
@@ -54,7 +59,8 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
         {
           file: formData.getAll('url')[0],
           description,
-          album
+          album,
+          newAlbumName
         },
         config
       )
@@ -64,6 +70,7 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
       console.log(error)
     } finally {
       setLoading(false)
+      setAlbum('DEFAULT')
     }
   }
   return (
@@ -75,7 +82,6 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
           <p>Arrastra tus fotos o selecciona desde tu equipo.</p>
         </div>
         {selected_images}
-
         <div className='m-3 p-3 text-center'>
           {selectedImages.length > 0 && (
             <div className='flex justify-center flex-col'>
@@ -93,7 +99,7 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
               />
 
               <SelectAlbum album={album} setAlbum={setAlbum} />
-              {album == 2 ? (
+              {album == 0 ? (
                 <>
                   <label htmlFor='album' className=' text-left '>
                     {' '}
@@ -104,8 +110,8 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
                     type='text'
                     placeholder='Ingrese nombre para nuevo Album'
                     className='my-2 bg-gray-100 p-3 rounded-lg'
-                    value={albumName}
-                    onChange={(e) => setAlbumName(e.target.value)}
+                    value={newAlbumName}
+                    onChange={(e) => setNewAlbumName(e.target.value)}
                   />
                 </>
               ) : (
@@ -118,7 +124,6 @@ const Dropzone = ({ selectedImages, setSelectedImages }) => {
             </div>
           )}
         </div>
-
         <div>
           <Link to='/dashboard'>
             <Button title={'Volver'} />

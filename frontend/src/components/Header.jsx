@@ -2,21 +2,25 @@ import { Link, useNavigate } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 import useAuth from '../hooks/useAuth'
 import Button from './Button'
+import { imagesActions } from '../features/imagesSlice'
+import { useDispatch } from 'react-redux'
 
 const Header = ({ linkTo, linkName }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const { auth } = useAuth()
   const handleLogout = () => {
     localStorage.removeItem('token')
+    dispatch(imagesActions.clearAll())
     navigate('/')
   }
 
   return (
-    <header className='px-4 py-5 bg-white border-b'>
+    <header className='px-4 py-5 bg-white border-b shadow'>
       <div className='md:flex md:justify-between'>
         <div className=' '>
           <Link to='/dashboard'>
-            <h2 className='text-4xl text-rose-600 font-black text-center'>
+            <h2 className='text-4xl text-rose-600 font-black text-center mb-1'>
               My Picz
             </h2>
           </Link>
@@ -26,7 +30,7 @@ const Header = ({ linkTo, linkName }) => {
               size={150}
               rating='pg'
               default='monsterid'
-              className='CustomAvatar-image'
+              className='CustomAvatar-image shadow-lg'
               protocol='https://'
               style={{ borderRadius: '9999px' }}
             />
