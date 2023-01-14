@@ -6,7 +6,9 @@ const Albums = () => {
 
   const photoAlbumList = Object.keys(photo_album).map((album) => {
     if (album !== 'Default') {
-      return <Album key={album} album={photo_album[album]} />
+      return (
+        <Album key={photo_album[album].id_album} album={photo_album[album]} />
+      )
     }
   })
 
