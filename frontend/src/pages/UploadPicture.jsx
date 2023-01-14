@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
-import Loading from '../components/Loading'
+import AlbumModal from '../components/AlbumModal'
 const UploadPicture = () => {
-  const [loading, setLoading] = useState(false)
-
+  const [selectedImages, setSelectedImages] = useState([])
+  const [show, setShow] = useState(true)
   return (
     <>
       <div className='bg-white m-3 p-6 rounded-lg shadow'>
         <div>Cargar Fotos</div>
-        {loading ? (
-          <Loading />
-        ) : (
-          <Dropzone loading={loading} setLoading={setLoading} />
-        )}
+
+        <Dropzone
+          selectedImages={selectedImages}
+          setSelectedImages={setSelectedImages}
+        />
       </div>
     </>
   )
