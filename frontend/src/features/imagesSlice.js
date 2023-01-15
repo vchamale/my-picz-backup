@@ -4,7 +4,8 @@ const initialState = {
   photo_album: [],
   albums: [],
   photos: [],
-  singlePhoto: {}
+  singlePhoto: {},
+  singleAlbum: {}
 }
 
 export const imagesSlice = createSlice({
@@ -22,6 +23,9 @@ export const imagesSlice = createSlice({
     },
     setSinglePhoto(state, action) {
       state.singlePhoto = action.payload
+    },
+    setSingleAlbum(state, action) {
+      state.singleAlbum = action.payload
     },
     clearAll(state, action) {
       state.photo_album = []

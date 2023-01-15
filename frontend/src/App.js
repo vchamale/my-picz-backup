@@ -10,8 +10,12 @@ import MainPage from './pages/MainPage'
 import CreateAlbum from './pages/CreateAlbum'
 import ProtectedRoutes from './layouts/ProtectedRoutes'
 import UploadPicture from './pages/UploadPicture'
+import AlbumView from './pages/AlbumView'
+import { useSelector } from 'react-redux'
 
 function App() {
+  const { singleAlbum } = useSelector((state) => state.images)
+
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -30,6 +34,7 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path='create_album' element={<CreateAlbum />} />
             <Route path='images' element={<UploadPicture />} />
+            <Route path='albums' element={<AlbumView album={singleAlbum} />} />
           </Route>
         </Routes>
       </AuthProvider>

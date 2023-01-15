@@ -62,12 +62,13 @@ const MainPage = () => {
           <div>
             <Title lightText={'Todas tus '} darkText={'Picz'} />
             <Albums />
+            <Title lightText={'Picz sin '} darkText={'Album'} />
             <Photos album={Default} handleOpen={handleOpen} />
           </div>
-          <div className='bg-white m-3 p-6 rounded-lg shadow'>
+          <div className='bg-white m-3 p-6 rounded-lg shadow flex justify-center'>
             <div>
               <Link to='images'>
-                <Button title={'Cargar Fotos'} />
+                <Button title={'Subir Fotos'} />
               </Link>
             </div>
           </div>

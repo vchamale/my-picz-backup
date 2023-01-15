@@ -85,4 +85,51 @@ const getAlbums = async (req, res) => {
   }
 }
 
-export { saveImage, getAllMedia, getAlbums }
+const deletePicture = async (req, res) => {
+  // const id_end_user = req.user.rows[0].id_end_user
+  const { id_photo } = req.params
+
+  try {
+    const deleteFromPhotoAlbum = await pool.query(
+      `DELETE FROM photo_album WHERE id_photo = $1`,
+      [id_photo]
+    )
+
+    const deleteSinglePicture = await pool.query(
+      `DELETE FROM photo WHERE id_photo = $1`,
+      [id_photo]
+    )
+
+    res.status(201).json({
+      msg: 'Foto eliminada con exito.'
+    })
+  } catch (error) {
+    console.log('Hubo un error obteniendo los Albums.', error)
+  }
+}
+
+const deleteAlbum = async (req, res) => {
+  // const id_end_user = req.user.rows[0].id_end_user
+  const { id_album } = req.params
+  console.log('si se esta mandando a llamar borrar el album: ', id_album)
+
+  try {
+    const deleteFromPhotoAlbum = await pool.query(
+      `DELETE FROM photo_album WHERE id_album = $1`,
+      [id_album]
+    )
+
+    const deleteSinglePicture = await pool.query(
+      `DELETE FROM album WHERE id_album = $1`,
+      [id_album]
+    )
+
+    res.status(201).json({
+      msg: 'Foto eliminada con exito.'
+    })
+  } catch (error) {
+    console.log('Hubo un error obteniendo los Albums.', error)
+  }
+}
+
+export { saveImage, getAllMedia, getAlbums, deletePicture, deleteAlbum }
